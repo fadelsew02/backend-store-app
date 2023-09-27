@@ -1,0 +1,7 @@
+
+# render.yaml
+buildCommand: npm run build
+staticPublishPath: build
+env:
+  - key: NODE_VERSION
+    value: 18.17.1
