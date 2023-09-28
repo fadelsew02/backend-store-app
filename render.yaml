@@ -1,6 +1,6 @@
 
 # render.yaml
-buildCommand: npm run build
+# buildCommand: npm run build
 staticPublishPath: build
 env:
   - key: NODE_VERSION
