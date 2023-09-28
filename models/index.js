@@ -16,8 +16,8 @@ const databaseUrl = process.env.DATABASE_URL; // Cela dépendra de ce que Render
 // Utilisez l'URL de la base de données de Render pour la configuration
 const sequelize = new Sequelize(databaseUrl, {
   dialect: 'postgres',
-  dialectOptions: {
-    ssl: false, // Désactive SSL/TLS
+    dialectOptions: {
+    ssl: true, // Désactive SSL/TLS
   },
 });
 
