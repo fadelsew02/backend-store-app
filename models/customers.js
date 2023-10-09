@@ -29,6 +29,11 @@ const Customers = sequelize.define('Customers', {
         type: DataTypes.STRING,
         allowNull: false
     },
+    photo: {
+        type: DataTypes.STRING,
+        allowNull: true
+    },
+
 });
 
 module.exports = Customers;

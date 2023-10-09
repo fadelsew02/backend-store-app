@@ -18,33 +18,31 @@ exports.router = (function() {
   apiRouter.route('/users/register/').post(userControlers.register);
   apiRouter.route('/users/login/').post(userControlers.login);
   apiRouter.route('/users/me/:token').get(userControlers.getUserProfile);
-  apiRouter.route('/users/me/').put(userControlers.updateUserProfile);
+  apiRouter.route('/users/me/:token').put(userControlers.updateUserProfile);
+  apiRouter.route('/users/me/photo').post(userControlers.addProfilePhoto);
 
   //Suppliers routes
-  apiRouter.route('/suppliers/display/').get(supplierControlers.display);
+  apiRouter.route('/suppliers/display/:store_id').get(supplierControlers.display);
   apiRouter.route('/suppliers/delete/:id').delete(supplierControlers.delete);
-  apiRouter.route('/suppliers/add/').post(supplierControlers.add);
-  // apiRouter.route('/suppliers/edit/').post(supplierControlers.editProfile);
+  apiRouter.route('/suppliers/add').post(supplierControlers.add);
+  apiRouter.route('/suppliers/edit/:idToEdit').put(supplierControlers.editProfile);
   
   apiRouter.route('/items/display/:cat').get(itemControlers.display);
   apiRouter.route('/items/getAllId/:itemName').get(itemControlers.getAllId);
+  apiRouter.route('/items/getAllCategory/:store_id').get(itemControlers.getAllCAtegory)
   
   apiRouter.route('/stores/getStoreId/:managerId').get(storeControlers.getStoreId);
 
-
   apiRouter.route('/inventory/commander').post(inventoryControlers.commander);
   apiRouter.route('/inventory/history/:id_store').get(inventoryControlers.history);
-
 
   apiRouter.route('/stocks/display/:id_store').get(stocksControlers.display);
   apiRouter.route('/stocks/edit/:idToEdit').put(stocksControlers.updatePriceQuantity);
   apiRouter.route('/stocks/panier').post(stocksControlers.panier);
   apiRouter.route('/stocks/payment').post(stocksControlers.payment);
 
-  
   apiRouter.route('/customers/listesCourses/:customer_id').get(customerControlers.list);
   apiRouter.route('/customers/display/:id_store').get(customerControlers.display);
-  
   
   apiRouter.route('/finances/recuperer/:id_store').get(financeControlers.recuperer);
   

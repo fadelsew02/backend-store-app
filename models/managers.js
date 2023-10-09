@@ -32,6 +32,10 @@ const Managers = sequelize.define('Managers', {
     manager_phone: {
         type: DataTypes.STRING,
         allowNull: false
+    },
+    manager_photo: {
+        type: DataTypes.STRING,
+        allowNull: true
     }
 });
 

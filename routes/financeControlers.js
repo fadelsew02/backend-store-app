@@ -19,7 +19,7 @@ module.exports = {
         try {
             const sqlQuery = `
                 SELECT 
-                    store_id, capital, depenses, (capital - depenses) AS solde
+                    store_id, capital, income, depenses, (capital + income - depenses) AS solde
                 FROM 
                     "Finances"
                 WHERE

@@ -4,6 +4,7 @@ const OrderDetails = require('../models/orderDetails')
 const Finances = require('../models/finance');
 const sequelize = require('../models/index'); 
 const { QueryTypes } = require('sequelize');
+const Items = require('../models/items');
 
 
 async function insertDataIntoTable(montant, customer_id, total_amount, storeId) {
@@ -97,26 +98,28 @@ module.exports = {
     },
     
     updatePriceQuantity: async (req, res) => {
+        console.log(req)
         const id_edited = req.params.idToEdit;
-
-        const { quantity } = req.body;
-        
+        const { quantity, price } = req.body;  
         try {
-            const articleFound = await Stocks.findOne({
-                where: { stock_id: id_edited}
+            const articleFoundStocks = await Stocks.findOne({
+                where: { item_id: id_edited}
             })
-            
-            if(articleFound){
+            const articleFoundItems = await Items.findOne({
+                where: { item_id: id_edited}
+            })
+            if(articleFoundStocks && articleFoundItems){
                 const updates = {};
-                    // if (price) {
-                    //     updates.price = price;
-                    // }
+                    if (price) {
+                        updates.price = price;
+                    }
                     if (quantity) {
                         updates.quantity = quantity;
                     }
-                    articleFound.update(updates);
+                    await articleFoundStocks.update({ quantity: updates.quantity });
+                    await articleFoundItems.update({ price: updates.price });
             } 
-             return res.status(201).json({ 'results': articleFound});
+             return res.status(201).json({ 'results': 'Réussi' });
         } catch (error) {
             return res.status(401).json({'message': error})
         }

@@ -23,13 +23,13 @@ const Finances = sequelize.define('Finances', {
         type: DataTypes.FLOAT,
         allowNull: false,
     },
+    income: {
+        type: DataTypes.FLOAT,
+        defaultValue: 0,
+    },
     depenses: {
         type: DataTypes.FLOAT,
-        allowNull: false,
-    },
-    revenus: {
-        type: DataTypes.FLOAT,
-        allowNull: false,
+        defaultValue: 0,
     }
 });
 
