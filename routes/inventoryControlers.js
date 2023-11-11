@@ -42,7 +42,6 @@ module.exports = {
 
             for (let i = 0; i < item_chosenId.length; i++) {
                 const itemId = item_chosenId[i].item_id;
-                console.log(itemId)
                 const item = await Items.findOne({ where: { item_id: itemId } });
                 if (!item) {
                     return res.status(404).json({ 'message': `Item with ID ${itemId} not found` });
@@ -62,9 +61,7 @@ module.exports = {
             if (totalAmount > storeBalance) {
                 return res.status(400).json({ 'message': 'Insufficient balance' });
             } 
-            // Mettre à jour les finances du magasin
             const newExpenses = account.depenses + totalAmount;
-            // const newBalance = storeBalance - totalAmount;
             await account.update({ depenses: newExpenses });
             
             for (const itemIds of item_chosenId) {
@@ -74,11 +71,9 @@ module.exports = {
                 if (!item) {
                     return res.status(404).json({ 'message': `Item with ID ${itemId} not found` });
                 }
-                // Mise à jour de la quantité dans la table Items
                 const newQuantityInItems = item.stock_quantity + quantity;
                 await item.update({ stock_quantity: newQuantityInItems });
 
-                // Mise à jour de la quantité dans la table Stocks
                 const stock = await Stocks.findOne({ where: { item_id: itemId } });
                 if (stock) {
                     const newQuantityInStocks = stock.quantity + quantity;

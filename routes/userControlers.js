@@ -1,6 +1,7 @@
 const bcrypt = require('bcrypt');
 const jwtUtils = require('../utils/jwt.utils');
 const Managers = require('../models/managers');
+const Users = require('../models/Users');
 const Customers = require('../models/customers');
 // const asyncLib = require('async');
 const { Op } = require('sequelize'); 
@@ -63,7 +64,7 @@ module.exports = {
     login: async function (req, res) {
         const { password, email } = req.body;
         if (email == null || password == null) {
-            return res.status(403).json({ 'message': 'Paramètres manquants' });
+            return res.status(403).json({ 'message': 'Missing parameters' });
         }
         try {
         
@@ -73,6 +74,10 @@ module.exports = {
             
             const managerFound = await Managers.findOne({
                 where: { manager_email: email }
+            });
+
+            const ownerFound = await Users.findOne({
+                where: { owner_email: email }
             });
             
             if (managerFound) {
@@ -100,7 +105,19 @@ module.exports = {
                 } else {
                     return res.status(402).json({ 'message': 'Password incorrect' });
                 }
-            }  else {
+            } else if(ownerFound) {
+                const resBycrypt = await bcrypt.compare(password, ownerFound.owner_password);
+                
+                if (resBycrypt) {
+                    return res.json({
+                        'results': { 'id': ownerFound.owner_id},
+                        'token': jwtUtils.generateTokenForUser(ownerFound, '3'),
+                        'role': 'owner'
+                    });
+                } else {
+                    return res.status(402).json({ 'message': 'Password incorrect' });
+                }
+            } else {
                 return res.status(402).json({ 'message': 'User non existant dans la base de données' });
             }
         } catch (error) {
@@ -180,10 +197,11 @@ module.exports = {
         } else if( user.userRole === 2){
             try{
                 const customer = await Customers.findOne({
-                    attributes: [ 'username', 'nom', 'prenom', 'email'],
+                    attributes: [ 'username', 'nom', 'prenom', 'email', 'photo'],
                     where: { customer_id: user.userId }
                   });
               if(customer){
+                console.log(customer)
                 return res.status(201).json({'results': customer});
               } else {
                 return res.status(404).json({ 'message': 'user not found' });

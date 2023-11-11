@@ -2,9 +2,6 @@
 const { DataTypes } = require('sequelize');
 const sequelize = require('./index');
 
-// const Stores = require('./stores');
-// const Customers = require('./customers');
-
 const Orders = sequelize.define('Orders', {
     order_id: {
         type: DataTypes.INTEGER,
@@ -12,14 +9,6 @@ const Orders = sequelize.define('Orders', {
         primaryKey: true,
         autoIncrement: true
     },
-    store_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        references: {
-            model: 'Stores',
-            key: 'store_id'
-        }
-    }, 
     order_date: {
         type: DataTypes.DATE,
         allowNull: false

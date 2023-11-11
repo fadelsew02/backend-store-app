@@ -19,6 +19,14 @@ const OrderDetail = sequelize.define('OrderDetail', {
             key: 'order_id'
         }
     }, 
+    store_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        references: {
+            model: 'Stores',
+            key: 'store_id'
+        }
+    }, 
     item_id: {
         type: DataTypes.INTEGER,
         allowNull: false,

@@ -3,33 +3,25 @@ const { DataTypes } = require('sequelize');
 const sequelize = require('./index');
 
 const Users = sequelize.define('Users', {
-    user_id: {
+    owner_id: {
         type: DataTypes.INTEGER,
         allowNull: false,
         primaryKey: true,
         autoIncrement: true
     },
-    username: {
+    owner_name: {
         type: DataTypes.STRING,
         allowNull: false
     }, 
-    nom: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    prenom: {
+    owner_surname: {
         type: DataTypes.STRING,
         allowNull: false
     }, 
-    password: {
+    owner_email: {
         type: DataTypes.STRING,
         allowNull: false
     },
-    email: {
-        type: DataTypes.STRING,
-        allowNull: false
-    },
-    role: {
+    owner_password: {
         type: DataTypes.STRING,
         allowNull: false
     }

@@ -6,8 +6,6 @@ const JWT_SIGN_SECRET = '0sj6gf9mk9Azet578nwxq22pzn5hvpxmpgtty34tfx8gz17sqer12nn
 // Exported functions
 module.exports = {
   generateTokenForUser: function(userData, number) {
-  console.log(userData.manager_id)
-  console.log(typeof number)
   
     if(number === '1'){
         return jwt.sign({
@@ -16,13 +14,20 @@ module.exports = {
         }, JWT_SIGN_SECRET, {
             expiresIn: '1h'
         })
-    } else {
+    } else if(number === '2') {
         return jwt.sign({
             userId: userData.customer_id,
             userRole: 2
         }, JWT_SIGN_SECRET, {
             expiresIn: '1h'
         })
+    } else {
+      return jwt.sign({
+        userId: userData.owner_id,
+        userRole: 3
+      }, JWT_SIGN_SECRET, {
+          expiresIn: '1h'
+      })
     }
   },
   parseAuthorization: function(authorization) {

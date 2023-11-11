@@ -26,7 +26,6 @@ module.exports = {
                         store_id: store_id
                     }
                 });
-                console.log(items[0].category_id)
                 const itemSpecified = await Categories.findAll({
                     attributes: ['category_id', 'category_name'],
                     where: {
